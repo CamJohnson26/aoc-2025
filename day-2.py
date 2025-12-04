@@ -195,12 +195,44 @@ def tests():
 
 # tests()
 
+# sum = 0
+# for [start_id, end_id] in inputs:
+#     new_invalids = get_invalid_ids(start_id, end_id)
+#     count = count_invalid_ids(start_id, end_id)
+#
+#     for i in new_invalids:
+#         print(i, start_id, end_id)
+#         sum += int(i)
+# print(sum)
+
+
+def digit_is_invalid(n):
+    # dumb brute force so stupid.
+    # loop over every pattern length
+    for i in range(1, (len(n) // 2) + 1): # Upper bound
+        pattern = []
+        if len(n) % i != 0:
+            continue # impossible pattern
+        for j, val in enumerate(n):
+            if len(pattern) - 1 < int(j) % i:
+                pattern.append(val)
+            elif pattern[int(j) % i] != val:
+                break
+            if j == len(n) - 1:
+                return True
+    return False
+
+assert digit_is_invalid('123123') == True
+assert digit_is_invalid('1212') == True
+assert digit_is_invalid('55555') == True
+
+# Part 2 burned my whole strategy so let's brute force since the input clearly is massively bounded
+# and you can brute force loop the whole thing.
+
 sum = 0
 for [start_id, end_id] in inputs:
-    new_invalids = get_invalid_ids(start_id, end_id)
-    count = count_invalid_ids(start_id, end_id)
-
-    for i in new_invalids:
-        print(i, start_id, end_id)
-        sum += int(i)
+    for i in range(int(start_id), int(end_id) + 1):
+        if digit_is_invalid(str(i)):
+            sum += i
+            print(i)
 print(sum)
