@@ -71,3 +71,8 @@ for x in range(0, w):
         if b2[y][x] == '@':
             count += 1
 print(inputs_count - count)
+for row in b2:
+    new_row = ''
+    for cell in row:
+        new_row += cell
+    print(new_row)
